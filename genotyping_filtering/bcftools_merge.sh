@@ -2,7 +2,7 @@
 #SBATCH -A naiss2024-5-54
 #SBATCH -p core
 #SBATCH -n 8
-#SBATCH -t 02:00:00
+#SBATCH -t 2-00:00:00
 #SBATCH -J bcftools_merge
 
 #Load modules
