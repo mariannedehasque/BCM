@@ -11,7 +11,7 @@
 module load bioinfo-tools
 module load plink/1.90b4.9
 
-DIR='/cfs/klemming/projects/supr/sllstore2017093/mammoth/marianne/BCM/DATA/haplo'
+DIR='/cfs/klemming/projects/supr/sllstore2017093/mammoth/marianne/GIT/data_BCM/ANGSD/haplo'
 FILE="BCM"
 
 cd $DIR

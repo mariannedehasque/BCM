@@ -2,9 +2,9 @@
 
 module load bioinfo-tools bcftools
 
-DIR='/cfs/klemming/projects/supr/sllstore2017093/mammoth/marianne/BCM/DATA/haplo'
+DIR='/cfs/klemming/projects/supr/sllstore2017093/mammoth/marianne/GIT/data_BCM/ANGSD/haplo'
 FILE="BCM"
-OUTDIR=/cfs/klemming/projects/supr/sllstore2017093/mammoth/marianne/BCM/SCRIPTS/
+OUTDIR=/cfs/klemming/projects/supr/sllstore2017093/mammoth/marianne/GIT/BCM/genotyping_filtering/INPUTFILES
 
 
 bcftools query -l $DIR/$FILE.vcf > $OUTDIR/oldnames.tmp.txt #Extract old sample IDs

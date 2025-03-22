@@ -13,11 +13,11 @@ module load ANGSD/0.940-stable
 
 #parameters
 CHROM=$1
-OUTDIR="/cfs/klemming/projects/supr/sllstore2017093/mammoth/marianne/BCM/DATA/haplo"
+OUTDIR="/cfs/klemming/projects/supr/sllstore2017093/mammoth/marianne/GIT/data_BCM/ANGSD/haplo"
 REF_DIR="/cfs/klemming/projects/supr/sllstore2017093/mammoth/marianne/references"
 REF_SEQ=$REF_DIR/GCF_024166365.1_mEleMax1.human_g1k_v37.DQ188829.2.fasta
 SITESFILE=$REF_DIR/$CHROM.repma.noCpg_ref.angsd.txt
-INPUTBAM="/cfs/klemming/projects/supr/sllstore2017093/mammoth/marianne/BCM/SCRIPTS/bamfiles.txt"
+INPUTBAM="/cfs/klemming/projects/supr/sllstore2017093/mammoth/marianne/GIT/BCM/genotyping_filtering/INPUTFILES/bamfiles.txt"
 FILENAME="BCM"
 
 

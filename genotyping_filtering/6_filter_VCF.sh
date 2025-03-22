@@ -12,7 +12,7 @@ module load bioinfo-tools
 module load bcftools/1.20
 module load tabix/0.2.6
 
-DIR=/cfs/klemming/projects/supr/sllstore2017093/mammoth/marianne/BCM/DATA/haplo
+DIR=/cfs/klemming/projects/supr/sllstore2017093/mammoth/marianne/GIT/data_BCM/ANGSD/haplo
 FILE=BCM.SampleID
 autos=$(seq -s, 1 27)
 DSUITE="/cfs/klemming/projects/supr/sllstore2017093/mammoth/marianne/BCM/SCRIPTS/DSUITE_list.txt"
