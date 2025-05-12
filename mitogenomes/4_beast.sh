@@ -12,12 +12,7 @@ module load bioinfo-tools
 module load beast/1.10.4
 
 DIR=/cfs/klemming/projects/supr/sllstore2017093/mammoth/marianne/GIT/data_BCM/mitogenomes
-#INPUT=BCM.vdv2021dated.aligned.OutgroupFiltered.add.novntr.strict.xml
-#INPUT=BCM.vdv2021dated.aligned.OutgroupFiltered.add.novntr.relaxed.xml
-#INPUT=BCM.vdv2021.aligned.OutgroupFiltered.add.novntr.strict.xml
-INPUT=BCM.vdv2021.aligned.OutgroupFiltered.add.novntr.tipdating.short.xml
-#INPUT=BCM.vdv2021.aligned.OutgroupFiltered.add.novntr.tipdating.xml
-
+INPUT=BCM.vdv2021dated.aligned.OutgroupFiltered.add.novntr.relaxed.xml
 
 cd $DIR
 
