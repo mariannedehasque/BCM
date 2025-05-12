@@ -16,7 +16,6 @@ DIR=/cfs/klemming/projects/supr/sllstore2017093/mammoth/marianne/GIT/data_BCM/AN
 FILE=BCM.SampleID
 autos=$(seq -s, 1 27)
 DSUITE="/cfs/klemming/projects/supr/sllstore2017093/mammoth/marianne/GIT/BCM/genotyping_filtering/INPUTFILES/DSUITE_list.txt"
-ORIENT="/cfs/klemming/projects/supr/sllstore2017093/mammoth/marianne/GIT/BCM/genotyping_filtering/INPUTFILES/ORIENT_list.txt"
 
 
 #Biallelic SNPS only
@@ -40,7 +39,3 @@ bcftools view -S $DSUITE -Oz -o $DIR/${FILE}.snps.NewChr.autos.Dsuite.vcf.gz $DI
 tabix $DIR/${FILE}.snps.NewChr.autos.Dsuite.vcf.gz
 bcftools view -S $DSUITE -Oz -o $DIR/${FILE}.snps.NewChr.X.Dsuite.vcf.gz $DIR/${FILE}.snps.NewChr.X.vcf.gz
 tabix $DIR/${FILE}.snps.NewChr.X.Dsuite.vcf.gz
-
-#ORIENT dataset
-bcftools view -S $ORIENT -Oz -o $DIR/${FILE}.snps.NewChr.autos.Orient.vcf.gz $DIR/${FILE}.snps.NewChr.autos.vcf.gz
-tabix $DIR/${FILE}.snps.NewChr.autos.Orient.vcf.gz
