@@ -17,10 +17,12 @@ setwd("~/OneDrive/NRM/Manuscripts/BCM/Rscripts/BEAST")
 
 ##################################################################################
 
+names <- read.csv(file = "SAMPLENAMES.csv", header=TRUE)
 beast <- read.beast(file = "BCM.vcv2021dated.aligned.OutgroupFiltered.relaxed.mcc.tre")
 beast <- drop.tip(beast, tip = c('EF588275_E.maximus_0', 'NC_005129_E.maximus_0'))
+beast <- drop.tip(beast, tip=c("KX027533_M.primigenius_Asia_44806"))
 
-## Rename tip label for clarity
+## Rename tip label with new species classifications
 beast@phylo$tip.label[beast@phylo$tip.label == "KX027509_M.primigenius_NAmerica_27713"]  <- "KX027509_M.sp_NAmerica_27713"
 beast@phylo$tip.label[beast@phylo$tip.label == "L286_combined_35.mammoth.mia_M.primigenius_WEurope_49111"] <- "L286_M.primigenius_WEurope_49111"
 beast@phylo$tip.label[beast@phylo$tip.label == "L082_combined_35.mammoth.mia_M.primigenius_Asia_23962"] <- "L082_M.primigenius_Asia_23962"
@@ -40,9 +42,9 @@ beast@phylo$tip.label[beast@phylo$tip.label =="KX027503_M.columbi_NAmerica_16770
 beast@phylo$tip.label[beast@phylo$tip.label =="KX027511_M.columbi_NAmerica_27778"] <- "KX027511_M.sp_NAmerica_27778"
 beast@phylo$tip.label[beast@phylo$tip.label =="bcm004_NAmerica_25320"] <- "bcm004_M.sp_BritishColumbia_25320"
 beast@phylo$tip.label[beast@phylo$tip.label =="bcm019_NAmerica_34720"] <- "bcm019_M.primigenius_BritishColumbia_34720"
-beast@phylo$tip.label[beast@phylo$tip.label =="KX027537_M.columbi_NAmerica_13392"] <- "M.columbi_U_Wyoming_13392"
-beast@phylo$tip.label[beast@phylo$tip.label =="KX027556_M.sp_NAmerica_42451"] <-"M.primigenius_V_Wyoming_42451"
-beast@phylo$tip.label[beast@phylo$tip.label =="JF912200_M.sp_NAmerica_44964"] <- "M.primigenius_H_Alaska_44964"
+#beast@phylo$tip.label[beast@phylo$tip.label =="KX027537_M.columbi_NAmerica_13392"] <- "M.columbi_U_Wyoming_13392"
+#beast@phylo$tip.label[beast@phylo$tip.label =="KX027556_M.sp_NAmerica_42451"] <-"M.primigenius_V_Wyoming_42451"
+#beast@phylo$tip.label[beast@phylo$tip.label =="JF912200_M.sp_NAmerica_44964"] <- "M.primigenius_H_Alaska_44964"
 
 #ggtree(beast) + geom_tiplab(offset=4, align=TRUE)+ xlim(NA, 1000000)
 
@@ -61,6 +63,7 @@ tree <- tree %>%
 
 tip_data <- tree %>% filter(isTip)
 label <- tip_data$label
+label <- names$Original
 species <- rep(NA, length(label))
 
 # Loop through each label and assign the species name
@@ -76,7 +79,7 @@ for (i in seq_along(label)) {
 
 ## Combine species name with tip labels in new dataframe
 species_assignment <- data.frame(
-  label = label,
+  label = names$New,
   value = 1,
   species = species
 )
@@ -85,19 +88,22 @@ species_colors<- c("M.columbi" = "#623740",
                    "M.primigenius" = "#d5914a", 
                    "M.sp" = "grey80")
 
+idx <- match(tree$label, names$Original)
+tree$label <- ifelse(!is.na(idx), names$New[idx], tree$label)
+
 p1 <- ggtree(tree) + 
   geom_tree(size = 0.2, color = "black") + 
   geom_point2(aes(subset=!isTip & posterior <0.7 | label ==100),shape=21, size=2, bg="white")+
   geom_point2(aes(subset=!isTip & posterior >0.9 | label ==100),shape=21, size=2, bg="black")+
-  geom_tiplab(aes(color = branch_category), size = 2, align = TRUE) + 
+  geom_tiplab(aes(color = branch_category, subset = !grepl("BC", label)), size = 2, align = TRUE) +
   scale_color_manual(values = c("NAmerica" = "#007d92",
                                 "Europe" = "#e7b465",
-                                "Asia" = "#F2684A",
+                                "Asia" = "#8e4585",
                                 "Other" = "grey10")) +
   theme(legend.position = "none") +
-  geom_tippoint(aes(subset = grepl("M.columbi_U_Wyoming_13392", label)), 
+  geom_tippoint(aes(subset = grepl("M. col. U", label)), 
                 color = "#dc143c", size = 2.5, shape = 17) +
-  geom_tippoint(aes(subset = grepl("bcm|M.primigenius_V_Wyoming_42451|M.primigenius_H_Alaska_44964", label)), 
+  geom_tippoint(aes(subset = grepl("BC|M. prim. V Wyoming|M. prim. H Alaska", label)), 
                 color = "#dc143c", size = 2.5, shape = 19) +
   xlim(NA, 700000)
 
@@ -121,7 +127,7 @@ p2 <- p1 +
 p3 <- p2 + theme(strip.text = element_blank(),legend.position = "none") 
 p4 <- facet_widths(p3, c(species = .1))
 
-ggsave("beast_morphology.pdf", plot = p4, width = 5, height = 10)
+ggsave("beast_morphology_v2.pdf", plot = p4, width = 5, height = 10)
 
 ###### LEGEND ######
 
@@ -137,11 +143,11 @@ legend("topleft",  c(expression(italic("M. columbi")),
 mtext("Morphological identification", at = 0.2, cex = 1, font = 2)
 dev.off()
 
-pdf("legend_geo.pdf", width = 6, height = 8)
+pdf("legend_geo_v2.pdf", width = 6, height = 8)
 plot(NULL, xaxt = 'n', yaxt = 'n', bty = 'n', ylab = '', xlab = '', xlim = 0:1, ylim = 0:1)
 legend("topleft",  c("North America", "Europe", "Asia"),
        pch = 16, pt.cex = 2, cex = 1, bty = 'n', 
-       col = c("#007d92", "#e7b465", "#F2684A"))
+       col = c("#007d92", "#e7b465", "#8e4585"))
 mtext("Geographical region", at = 0.14, cex = 1, font = 2)
 dev.off()
 
