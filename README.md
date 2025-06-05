@@ -1,2 +1,1 @@
-# BCM
-Scripts for the British Columbian Mammoth (BCM) project
+Code and scripts used for British Columbia mammoth project.
